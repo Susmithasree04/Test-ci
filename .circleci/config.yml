@@ -1,7 +1,13 @@
-version: 2.1
+version: 2.1 # Use version 2.1 to enable orb usage.
+
 orbs:
-    hello: circleci/hello-build@0.0.5
-workflows:
-    "Hello Workflow":
-        jobs:
-          - hello/hello-build
+  win: circleci/windows@2.2.0 # The Windows orb give you everything you need to start using the Windows executor.
+
+jobs:
+  build: # name of your job
+    executor: win/default # executor type
+
+    steps:
+      # Commands are run in a Windows virtual machine environment
+      - checkout
+      - run: Write-Host 'Hello, Windows'
