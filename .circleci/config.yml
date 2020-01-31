@@ -11,5 +11,9 @@ jobs:
       - checkout
       - run: mkdir bucket && echo "lorem ipsum" > bucket/build_asset.txt
       - aws-s3/copy:
+        arguments: |
+        aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
+        aws-region: AWS_REGION_BLUE
+        aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
           from: bucket/build_asset.txt
           to: 's3://storagedorcircleci/circlecidata/'
