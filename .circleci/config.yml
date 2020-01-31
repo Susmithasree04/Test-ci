@@ -1,13 +1,15 @@
-version: 2.1 # Use version 2.1 to enable orb usage.
+version: 2.1
 
 orbs:
-  win: circleci/windows@2.2.0 # The Windows orb give you everything you need to start using the Windows executor.
+  aws-s3: circleci/aws-s3@1.0.15
 
 jobs:
-  build: # name of your job
-    executor: win/default # executor type
-
+  build:
+    docker:
+      - image: 'cimg/python:3.6'
     steps:
-      # Commands are run in a Windows virtual machine environment
       - checkout
-      - run: Write-Host 'Hello, Windows'
+      - run: mkdir bucket && echo "lorem ipsum" > bucket/build_asset.txt
+      - aws-s3/copy:
+          from: bucket/build_asset.txt
+          to: 's3://storagedorcircleci/circlecidata/'
